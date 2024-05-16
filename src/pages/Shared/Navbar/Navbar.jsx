@@ -38,12 +38,12 @@ const Navbar = () => {
         Our Menu
       </NavLink>
       <NavLink
-        to="ourShop"
+        to="order"
         className={({ isActive }) =>
           isActive ? activeClassName : "font-bold uppercase"
         }
       >
-        Our Shop
+        Order Food
       </NavLink>
     </>
   );
