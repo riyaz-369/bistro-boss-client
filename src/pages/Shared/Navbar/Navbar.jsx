@@ -30,7 +30,7 @@ const Navbar = () => {
         DASHBOARD
       </NavLink>
       <NavLink
-        to="ourMenu"
+        to="menu"
         className={({ isActive }) =>
           isActive ? activeClassName : "font-bold uppercase"
         }
