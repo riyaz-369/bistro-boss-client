@@ -1,5 +1,6 @@
 const FoodCard = ({ item }) => {
   const { image, price, recipe, name } = item;
+
   return (
     <div className="card bg-base-100 shadow-xl">
       <figure>
