@@ -2,29 +2,38 @@ import { useEffect, useRef, useState } from "react";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
-  LoadCanvasTemplateNoReload,
   validateCaptcha,
 } from "react-simple-captcha";
+import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
+  const { signIn } = useAuth();
 
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+
+    try {
+      const result = await signIn(email, password);
+      console.log(result.user);
+      alert("success");
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   const handleValidateCaptcha = () => {
-    const userCaptchaValue = captchaRef.current.value;
-    if (validateCaptcha(userCaptchaValue)) {
+    const user_captcha_value = captchaRef.current.value;
+    if (validateCaptcha(user_captcha_value)) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -50,6 +59,7 @@ const Login = () => {
               </label>
               <input
                 type="email"
+                name="email"
                 placeholder="email"
                 className="input input-bordered"
                 required
@@ -61,6 +71,7 @@ const Login = () => {
               </label>
               <input
                 type="password"
+                name="password"
                 placeholder="password"
                 className="input input-bordered"
                 required
@@ -91,15 +102,19 @@ const Login = () => {
               </a>
             </div>
             <div className="form-control mt-6">
-              <button
-                disabled={disabled}
-                type="submit"
-                className="btn btn-primary"
-              >
+              <button disabled={disabled} className="btn btn-primary">
                 Login
               </button>
             </div>
           </form>
+          <div className="pl-8 pb-8">
+            <p>
+              Create an account:{" "}
+              <Link to="/signUp" className="btn-link">
+                Sign Up
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
