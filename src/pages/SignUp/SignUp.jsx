@@ -1,23 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 
 const SignUp = () => {
-  const { createUser } = useAuth();
+  const { createUser, updateUserProfile } = useAuth();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const handleSignUp = async (data) => {
-    const { email, password } = data;
+    const { email, password, name, photo } = data;
 
     try {
       const result = await createUser(email, password);
       console.log(result.user);
+      await updateUserProfile(name, photo);
+      reset();
       alert("success");
+      navigate("/");
     } catch (err) {
       console.log(err.message);
     }
@@ -51,6 +56,21 @@ const SignUp = () => {
               )}
               {errors.name?.type === "required" && (
                 <p className="text-red-600">Name is required</p>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Photo URL</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Photo url"
+                className="input input-bordered"
+                {...register("photo", { required: true })}
+              />
+
+              {errors.photo?.type === "required" && (
+                <p className="text-red-600">Photo url is required</p>
               )}
             </div>
             <div className="form-control">
