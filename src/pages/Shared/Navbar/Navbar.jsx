@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const activeClassName = "text-yellow-300 font-bold uppercase";
@@ -84,7 +84,9 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1 space-x-6">{navLinks}</ul>
       </div>
       <div className="navbar-end">
-        <a className="uppercase font-bold btn-warning btn">Log In</a>
+        <Link to="/login" className="uppercase font-bold btn-warning btn">
+          Log In
+        </Link>
       </div>
     </div>
   );
