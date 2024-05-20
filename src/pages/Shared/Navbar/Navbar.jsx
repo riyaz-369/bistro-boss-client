@@ -1,9 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../../../hooks/useCart";
 
 const Navbar = () => {
   const activeClassName = "text-yellow-300 font-bold uppercase";
   const { user, logOut } = useAuth();
+
+  const [cart] = useCart();
 
   const navLinks = (
     <>
@@ -46,6 +50,12 @@ const Navbar = () => {
         }
       >
         Order Food
+      </NavLink>
+      <NavLink to="/dashboard/cart">
+        <button className="flex items-center gap-1">
+          <FaShoppingCart size={20} />
+          <div className="badge badge-secondary">{cart?.length}</div>
+        </button>
       </NavLink>
     </>
   );
