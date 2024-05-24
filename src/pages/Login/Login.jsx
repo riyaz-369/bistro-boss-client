@@ -6,6 +6,7 @@ import {
 } from "react-simple-captcha";
 import useAuth from "../../hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
@@ -14,7 +15,7 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  console.log("state on the location login page:", from);
+  // console.log("state on the location login page:", from);
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -107,7 +108,10 @@ const Login = () => {
               </button>
             </div>
           </form>
-          <div className="pl-8 pb-8">
+          <div className="px-8 pb-8 space-y-2">
+            <div>
+              <SocialLogin />
+            </div>
             <p>
               Create an account:{" "}
               <Link to="/signUp" className="btn-link">

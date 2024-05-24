@@ -1,10 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
+import useAxiosCommon from "../../hooks/useAxiosCommon";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const { createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
+  const axiosCommon = useAxiosCommon();
 
   const {
     register,
@@ -16,13 +19,20 @@ const SignUp = () => {
   const handleSignUp = async (data) => {
     const { email, password, name, photo } = data;
 
+    const userInfo = {
+      name,
+      email,
+    };
+
     try {
-      const result = await createUser(email, password);
-      console.log(result.user);
+      await createUser(email, password);
       await updateUserProfile(name, photo);
-      reset();
-      alert("success");
-      navigate("/");
+      const { data } = await axiosCommon.post("/users", userInfo);
+      if (data.insertedId) {
+        reset();
+        alert("success");
+        navigate("/");
+      }
     } catch (err) {
       console.log(err.message);
     }
@@ -132,7 +142,10 @@ const SignUp = () => {
               <button className="btn btn-primary">Sign Up</button>
             </div>
           </form>
-          <div className="pl-8 pb-8">
+          <div className="px-8 pb-8 space-y-2">
+            <div>
+              <SocialLogin />
+            </div>
             <p>
               Login your account:{" "}
               <Link to="/login" className="btn-link">
