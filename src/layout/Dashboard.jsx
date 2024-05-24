@@ -1,4 +1,3 @@
-import { CgAdd } from "react-icons/cg";
 import {
   FaBook,
   FaCalendar,
@@ -23,7 +22,7 @@ const Dashboard = () => {
     <div className="flex">
       {/* dashboard side bar */}
       <div className="w-64 min-h-screen p-6 bg-orange-400 space-y-4">
-        {isAdmin ? (
+        {isAdmin.admin ? (
           <>
             <NavLink
               to="/dashboard/adminHome"
@@ -34,6 +33,7 @@ const Dashboard = () => {
                 <span>Admin Home</span>
               </span>
             </NavLink>
+
             <NavLink
               to="/dashboard/addItems"
               className={({ isActive }) => (isActive ? active : "text-black")}
@@ -72,7 +72,7 @@ const Dashboard = () => {
             </NavLink>
           </>
         ) : (
-          <>
+          <div className="space-y-4">
             <NavLink
               to="/dashboard/home"
               className={({ isActive }) => (isActive ? active : "text-black")}
@@ -101,24 +101,15 @@ const Dashboard = () => {
               </span>
             </NavLink>
             <NavLink
-              to="/dashboard/add"
-              className={({ isActive }) => (isActive ? active : "text-black")}
-            >
-              <span className="flex items-center gap-1">
-                <CgAdd />
-                <span>Add Items</span>
-              </span>
-            </NavLink>
-            <NavLink
               to="/dashboard/list"
               className={({ isActive }) => (isActive ? active : "text-black")}
             >
               <span className="flex items-center gap-1">
                 <FaList />
-                <span>List</span>
+                <span>My Booking</span>
               </span>
             </NavLink>
-          </>
+          </div>
         )}
 
         {/* shared navLinks */}

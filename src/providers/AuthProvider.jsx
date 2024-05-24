@@ -55,7 +55,7 @@ const AuthProvider = ({ children }) => {
       const userInfo = currentUser?.email;
       if (currentUser) {
         const getData = async () => {
-          const { data } = await axiosCommon.post("/jwt", userInfo);
+          const { data } = await axiosCommon.post("/jwt", { userInfo });
           if (data.token) {
             localStorage.setItem("access-token", data.token);
           }
@@ -64,7 +64,6 @@ const AuthProvider = ({ children }) => {
       } else {
         localStorage.removeItem("access-token");
       }
-
       setLoading(false);
     });
     return () => {
