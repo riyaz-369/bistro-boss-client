@@ -12,7 +12,7 @@ const CheckOutForm = () => {
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const [cart] = useCart();
+  const [cart, refetch] = useCart();
 
   const price = cart.reduce((total, item) => total + item.price, 0);
   // console.log(price);
@@ -71,6 +71,23 @@ const CheckOutForm = () => {
       if (paymentIntent.status === "succeeded") {
         console.log("transaction id", paymentIntent.id);
         setTransactionId(paymentIntent.id);
+
+        // payment complete, now save the payment in the database
+        const payment = {
+          email: user.email,
+          price,
+          transactionId: paymentIntent.id,
+          date: new Date(), // convert to utc date, use moment js
+          cartIds: cart.map((item) => item._id),
+          menuItemIds: cart.map((item) => item.menuId),
+          status: "pending",
+        };
+
+        const { data } = await axiosSecure.post("/payment", payment);
+        if (data?.paymentResult?.insertedId) {
+          alert("payment succeed");
+          refetch();
+        }
       }
     }
   };
@@ -78,6 +95,7 @@ const CheckOutForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <CardElement
+        className="border p-2 rounded-md py-4"
         options={{
           style: {
             base: {

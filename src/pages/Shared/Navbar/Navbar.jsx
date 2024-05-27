@@ -6,7 +6,6 @@ import useCart from "../../../hooks/useCart";
 const Navbar = () => {
   const activeClassName = "text-yellow-300 font-bold uppercase";
   const { user, logOut } = useAuth();
-
   const [cart] = useCart();
 
   const navLinks = (
@@ -27,6 +26,7 @@ const Navbar = () => {
       >
         contact us
       </NavLink>
+
       <NavLink
         to="/dashboard"
         className={({ isActive }) =>

@@ -1,18 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { FaUsers } from "react-icons/fa";
+import useAllUsers from "../../../hooks/useAllUsers";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
-
-  const { data: users = [], refetch } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const { data } = await axiosSecure.get("/users");
-      return data;
-    },
-  });
+  const [users, refetch] = useAllUsers();
 
   const handleDeleteUser = async (user) => {
     const { data } = await axiosSecure.delete(`/users/${user?._id}`);

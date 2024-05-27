@@ -11,10 +11,14 @@ import {
 import { MdMenu } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
+import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
   // TODO: get isAdmin value  from the database
   const [isAdmin] = useAdmin();
+  const [cart] = useCart();
+
+  console.log(isAdmin);
 
   const active = "font-bold text-white";
 
@@ -22,7 +26,7 @@ const Dashboard = () => {
     <div className="flex">
       {/* dashboard side bar */}
       <div className="w-64 min-h-screen p-6 bg-orange-400 space-y-4">
-        {isAdmin.admin ? (
+        {isAdmin ? (
           <>
             <NavLink
               to="/dashboard/adminHome"
@@ -74,7 +78,7 @@ const Dashboard = () => {
         ) : (
           <div className="space-y-4">
             <NavLink
-              to="/dashboard/home"
+              to="/dashboard/userHome"
               className={({ isActive }) => (isActive ? active : "text-black")}
             >
               <span className="flex items-center gap-1">
@@ -83,12 +87,12 @@ const Dashboard = () => {
               </span>
             </NavLink>
             <NavLink
-              to="/dashboard/reservation"
+              to="/dashboard/paymentHistory"
               className={({ isActive }) => (isActive ? active : "text-black")}
             >
               <span className="flex items-center gap-1">
                 <FaCalendar />
-                <span>User Reservation</span>
+                <span>Reservation</span>
               </span>
             </NavLink>
             <NavLink
@@ -97,7 +101,7 @@ const Dashboard = () => {
             >
               <span className="flex items-center gap-1">
                 <FaShoppingCart />
-                <span>My Cart</span>
+                <span>My Cart: {cart.length}</span>
               </span>
             </NavLink>
             <NavLink
