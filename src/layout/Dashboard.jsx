@@ -18,15 +18,14 @@ const Dashboard = () => {
   const [isAdmin] = useAdmin();
   const [cart] = useCart();
 
-  console.log(isAdmin);
-
+  const admin = isAdmin.admin;
   const active = "font-bold text-white";
 
   return (
     <div className="flex">
       {/* dashboard side bar */}
       <div className="w-64 min-h-screen p-6 bg-orange-400 space-y-4">
-        {isAdmin ? (
+        {admin ? (
           <>
             <NavLink
               to="/dashboard/adminHome"

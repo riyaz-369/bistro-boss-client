@@ -14,6 +14,8 @@ const CheckOutForm = () => {
   const { user } = useAuth();
   const [cart, refetch] = useCart();
 
+  console.log(cart);
+
   const price = cart.reduce((total, item) => total + item.price, 0);
   // console.log(price);
 

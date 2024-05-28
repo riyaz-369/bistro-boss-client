@@ -2,11 +2,16 @@ import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../../../hooks/useCart";
+import useAdmin from "../../../hooks/useAdmin";
 
 const Navbar = () => {
   const activeClassName = "text-yellow-300 font-bold uppercase";
   const { user, logOut } = useAuth();
   const [cart] = useCart();
+  const [isAdmin] = useAdmin();
+
+  const admin = isAdmin?.admin;
+  console.log(admin);
 
   const navLinks = (
     <>
@@ -26,15 +31,26 @@ const Navbar = () => {
       >
         contact us
       </NavLink>
-
-      <NavLink
-        to="/dashboard"
-        className={({ isActive }) =>
-          isActive ? activeClassName : "font-bold uppercase"
-        }
-      >
-        DASHBOARD
-      </NavLink>
+      {user && admin && (
+        <NavLink
+          to="/dashboard/adminHome"
+          className={({ isActive }) =>
+            isActive ? activeClassName : "font-bold uppercase"
+          }
+        >
+          DASHBOARD
+        </NavLink>
+      )}
+      {user && !admin && (
+        <NavLink
+          to="/dashboard/userHome"
+          className={({ isActive }) =>
+            isActive ? activeClassName : "font-bold uppercase"
+          }
+        >
+          DASHBOARD
+        </NavLink>
+      )}
       <NavLink
         to="menu"
         className={({ isActive }) =>

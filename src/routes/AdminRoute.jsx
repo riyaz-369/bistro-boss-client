@@ -5,6 +5,7 @@ import useAdmin from "../hooks/useAdmin";
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
   const [isAdmin, isAdminLoading] = useAdmin();
+  // console.log(isAdmin.admin);
   const location = useLocation();
 
   if (loading || isAdminLoading) return <p>Loading...</p>;
